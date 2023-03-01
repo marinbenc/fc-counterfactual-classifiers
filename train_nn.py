@@ -142,15 +142,15 @@ def main(lr, batch_size, decay):
   labels = pd.read_csv('abide_fc_dataset/labels_train.csv')
   date = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-  # k = 5
-  # kf = KFold(n_splits=k, shuffle=True, random_state=2023)
-  # for fold, (train_idx, valid_idx) in enumerate(kf.split(labels)):
-  #   train_fold(labels, date, fold, train_idx, valid_idx)
+  k = 5
+  kf = KFold(n_splits=k, shuffle=True, random_state=2023)
+  for fold, (train_idx, valid_idx) in enumerate(kf.split(labels)):
+    train_fold(labels, date, fold, train_idx, valid_idx)
 
   dataset_train_all = Dataset(labels)
   train_loader_all = DataLoader(dataset_train_all, batch_size=batch_size, shuffle=False, num_workers=0)
-  valid_loader_all = DataLoader(dataset_train_all, batch_size=batch_size, shuffle=False, num_workers=0)
-  train_model(train_loader_all, valid_loader_all, f'model_weights/nn-{date}-all.pth', epochs=60, lr=lr, decay=decay)
+  valid_loader_all = DataLoader(dataset_train_all, batch_size=batch_size, shufefle=False, num_workers=0)
+  train_model(train_loader_all, valid_loader_all, f'model_wights/nn-{date}-all.pth', epochs=60, lr=lr, decay=decay)
 
 if __name__ == '__main__':
   args = argparse.ArgumentParser()
